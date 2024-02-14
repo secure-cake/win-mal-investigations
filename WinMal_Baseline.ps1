@@ -1,9 +1,9 @@
 #change four variables below for casename, target hostname, triage dir and output dir
 $casename = 'baseline'
 $target_hostname = 'baseline'
-$triage_data_directory = "c:\cases\$casename\winmal_data"
-$output_destination_directory = "c:\cases\$casename\output"
-New-Item -Path c:\cases\$casename\output -ItemType Directory
+$triage_data_directory = "d:\cases\$casename\winmal_data"
+$output_destination_directory = "d:\cases\$casename\output"
+New-Item -Path d:\cases\$casename\output -ItemType Directory
 
 (get-childitem -Directory $triage_data_directory).name | ForEach-Object {
 #Copies triage-collection "results" to output directory for review
