@@ -95,3 +95,12 @@ NOTE: Ideally, the "baseline" collection can and should be run proactively, befo
 **Parse Artifacts**:
 
 Although we gathered some artifacts that generally require parsing for review/analysis (MFT, EVTX), the "Win Mal Investigation" primary artifacts don't require parsing, though some formatting is helpful. We'll use Excel to combine our "tareget" and "baseline" endpoint output into a single Excel workbook, to format our data, and to perform "differential" analysis via Contional Formatting, "highlighting" artifact entries that exist on our "target" but NOT on our "baseline" endpoint.
+
+We will need to stage our data and make sure the script matches our folder naming and hierarchy. In general, I follow the following directory structure:
+- Separate Data Volume: eg "D:\" (separeate from the OS Volume)
+- Cases Folder on Data Volume: eg "D:\cases"
+- Named Case Folder under Cases: eg "D:\cases\winmal-case"
+- Triage Data Folder under Case Folder: eg "D:\cases\winmal-case\winmal_data"
+- Output directory for parses/formatted Case Data: eg "D:\cases\winmal-case\winmal_data\output"
+
+Obviously do what makes sense to you, but make sure the folders/paths are set correctly in the script variables (see "WinMal_Excel.ps1" script in this repo).
