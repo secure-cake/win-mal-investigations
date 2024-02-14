@@ -104,3 +104,8 @@ We will need to stage our data and make sure the script matches our folder namin
 - Output directory for parses/formatted Case Data: eg "D:\cases\winmal-case\winmal_data\output"
 
 Obviously do what makes sense to you, but make sure the folders/paths are set correctly in the script variables (see "WinMal_Excel.ps1" script in this repo).
+
+Assuming you are following the aforementioned directory structure, unzip your "baseline" system collection to "D:\cases\baseline\winmal_data," then run the "WinMal_Baseline.ps1" script, which will rename and stage artifact CSV files to the "output" directory. We'll copy/paste the "output" directory into the "winmal-case" directory shortly. 
+
+Next, unzip the "target" system collection to "D:\cases\winmal-case\winmal_data," COPY the "output" directory (not just the contents, but the entire directory) into "D:\cases\winmal-case\winmal_data\," then run the "WinMal_Excel.ps1" script (NOTE: _you must have Excel installed on your Analysis Workstation for this to work!_). 
+
