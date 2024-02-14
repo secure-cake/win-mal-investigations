@@ -83,4 +83,13 @@ Configure "Collection:" (ZIP or S3 Upload)
    -  Click "Server.Utils.CreateCollector, Uploaded Files," then click "Collector_velociraptor-vn.n.n-windows-amd64.exe"
    -  If you receive browser warnings, "keep" and download
    -  Rename collector descriptively, eg "win-mal-no-upload-collector-win-x64.exe"
-  **NOTE:** I have created and shared a collector in this repo, with the above configuration, suitable for your use/testing!
+  **NOTE:** I have created and shared a collector in this repo, with the above configuration, suitable for your use/testing (win-mal-no-upload-collector-v0.7.1-1-windows-amd64.zip)!
+
+Next, we'll need to copy the collector executable to our "target" and "baseline" systems, "run as admin" to create the ZIP archive of Windows Artifacts, then move the ZIP files to our Analysis Workstation.
+
+NOTE: Ideally, the "baseline" collection can and should be run proactively, before an alert/event/incident requiring investigation occurs. 
+
+**Remote Console** - If you have a "remote console" opition via EDR or similar, with the ability to send/receive files, this can be a FANTASTIC way to copy the exe to the "target" endpoint, execute the collector, then retrieve the ZIP file safely/securely. 
+
+------------------------
+**Parse Artifacts**:
