@@ -93,3 +93,5 @@ NOTE: Ideally, the "baseline" collection can and should be run proactively, befo
 
 ------------------------
 **Parse Artifacts**:
+
+Although we gathered some artifacts that generally require parsing for review/analysis (MFT, EVTX), the "Win Mal Investigation" primary artifacts don't require parsing, though some formatting is helpful. We'll use Excel to combine our "tareget" and "baseline" endpoint output into a single Excel workbook, to format our data, and to perform "differential" analysis via Contional Formatting, "highlighting" artifact entries that exist on our "target" but NOT on our "baseline" endpoint.
