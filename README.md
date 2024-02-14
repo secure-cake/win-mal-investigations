@@ -1,4 +1,4 @@
-#Windows Malware Investigations
+# Windows Malware Investigations
 Scripts and notes for performing Windows malware investigations via differential analysis using PowerShell, Velociraptor and Excel!
 
 Context = You've had an alert/event and need to investigate possible or confirmed malware detonation on a Windows endpoint. 
