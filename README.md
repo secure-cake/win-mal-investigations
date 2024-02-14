@@ -106,6 +106,109 @@ We will need to stage our data and make sure the script matches our folder namin
 Obviously do what makes sense to you, but make sure the folders/paths are set correctly in the script variables (see "WinMal_Excel.ps1" script in this repo).
 
 Assuming you are following the aforementioned directory structure, unzip your "baseline" system collection to "D:\cases\baseline\winmal_data," then run the "WinMal_Baseline.ps1" script, which will rename and stage artifact CSV files to the "output" directory. We'll copy/paste the "output" directory into the "winmal-case" directory shortly. 
+NOTE: _you don't need to create a new baseline every time you perform analysis, only if and when things change and you need to update!_
 
-Next, unzip the "target" system collection to "D:\cases\winmal-case\winmal_data," COPY the "output" directory (not just the contents, but the entire directory) into "D:\cases\winmal-case\winmal_data\," then run the "WinMal_Excel.ps1" script (NOTE: _you must have Excel installed on your Analysis Workstation for this to work!_). 
+Next, unzip the "target" system collection to "D:\cases\winmal-case\winmal_data," COPY the "output" directory (not just the contents, but the entire directory) into "D:\cases\winmal-case\winmal_data\," then run the "WinMal_Excel.ps1" script 
+NOTE: _you must have Excel installed on your Analysis Workstation for this to work!_
+
+You should now have a "target-with-baseline-output.xlsx" workbook in the "output" folder!
+
+----------------------------
+**Differential Analysis**:
+
+Last but not least, we'll perform differential analysis to identity "unusual/anomalous" activity using Excel. We'll need to create some "automations" in Excel, but you should only have to do this once on your Analysis Workstation. 
+
+First, open the "target-with-baseline-output.xlsx" workbook in Excel. Then click "automate" on the top menu, then "new script." In the Code Editor, click the default script name, "Script" and enter a new name for the script (see below). Then copy/paste the provided script code below. Repeat x6 for each of the scripts below (sorry, but you only have to complete this process once! the scripts will automatically associate with your Excel sign-in and be available on other systems!)
+
+_dns-diff_:
+```
+function main(workbook: ExcelScript.Workbook) {
+    let conditionalFormatting: ExcelScript.ConditionalFormat;
+    let selectedSheet = workbook.getActiveWorksheet();
+    // Create custom from range A:A on selectedSheet
+    conditionalFormatting = selectedSheet.getRange("A:A").addConditionalFormat(ExcelScript.ConditionalFormatType.custom);
+    conditionalFormatting.getCustom().getRule().setFormula("=COUNTIF('baseline-dns'!$A$1:$A$100,A1)=0");
+    conditionalFormatting.getCustom().getFormat().getFill().setColor("#ffe699");
+    conditionalFormatting.setStopIfTrue(false);
+    conditionalFormatting.setPriority(0);
+  // Set height of row(s) at all cells on selectedSheet to 15
+  selectedSheet.getRange().getFormat().setRowHeight(15);
+}
+```
+_netstat-diff_: 
+```
+function main(workbook: ExcelScript.Workbook) {
+	let conditionalFormatting: ExcelScript.ConditionalFormat;
+	let selectedSheet = workbook.getActiveWorksheet();
+	// Create custom from range C:C on selectedSheet
+	conditionalFormatting = selectedSheet.getRange("C:C").addConditionalFormat(ExcelScript.ConditionalFormatType.custom);
+	conditionalFormatting.getCustom().getRule().setFormula("=COUNTIF('baseline-netstat'!$C$1:$C$250,C1)=0");
+	conditionalFormatting.getCustom().getFormat().getFill().setColor("#ffe699");
+	conditionalFormatting.setStopIfTrue(false);
+	conditionalFormatting.setPriority(0);
+	// Set height of row(s) at all cells on selectedSheet to 15
+	selectedSheet.getRange().getFormat().setRowHeight(15);
+}
+```
+_pslist-diff_: 
+```
+function main(workbook: ExcelScript.Workbook) {
+	let conditionalFormatting: ExcelScript.ConditionalFormat;
+	let selectedSheet = workbook.getActiveWorksheet();
+	// Create custom from range D:D on selectedSheet
+	conditionalFormatting = selectedSheet.getRange("D:D").addConditionalFormat(ExcelScript.ConditionalFormatType.custom);
+	conditionalFormatting.getCustom().getRule().setFormula("=COUNTIF('baseline-pslist'!$D$1:$D$250,D1)=0");
+	conditionalFormatting.getCustom().getFormat().getFill().setColor("#ffe699");
+	conditionalFormatting.setStopIfTrue(false);
+	conditionalFormatting.setPriority(0);
+	// Set height of row(s) at all cells on selectedSheet to 15
+	selectedSheet.getRange().getFormat().setRowHeight(15);
+}
+```
+_services-diff_:
+```
+function main(workbook: ExcelScript.Workbook) {
+    let conditionalFormatting: ExcelScript.ConditionalFormat;
+    let selectedSheet = workbook.getActiveWorksheet();
+    // Create custom from range A:A on selectedSheet
+    conditionalFormatting = selectedSheet.getRange("B:B").addConditionalFormat(ExcelScript.ConditionalFormatType.custom);
+    conditionalFormatting.getCustom().getRule().setFormula("=COUNTIF('baseline-services'!$B$1:$B$300,B1)=0");
+    conditionalFormatting.getCustom().getFormat().getFill().setColor("#ffe699");
+    conditionalFormatting.setStopIfTrue(false);
+    conditionalFormatting.setPriority(0);
+  // Set height of row(s) at all cells on selectedSheet to 15
+  selectedSheet.getRange().getFormat().setRowHeight(15);
+  }
+```
+_startup-diff_:
+```
+function main(workbook: ExcelScript.Workbook) {
+    let conditionalFormatting: ExcelScript.ConditionalFormat;
+    let selectedSheet = workbook.getActiveWorksheet();
+    // Create custom from range A:A on selectedSheet
+    conditionalFormatting = selectedSheet.getRange("A:A").addConditionalFormat(ExcelScript.ConditionalFormatType.custom);
+    conditionalFormatting.getCustom().getRule().setFormula("=COUNTIF('baseline-startup'!$A$1:$A$50,A1)=0");
+    conditionalFormatting.getCustom().getFormat().getFill().setColor("#ffe699");
+    conditionalFormatting.setStopIfTrue(false);
+    conditionalFormatting.setPriority(0);
+  // Set height of row(s) at all cells on selectedSheet to 15
+  selectedSheet.getRange().getFormat().setRowHeight(15);
+}
+```
+_tasks-diff_:
+```
+function main(workbook: ExcelScript.Workbook) {
+    let conditionalFormatting: ExcelScript.ConditionalFormat;
+    let selectedSheet = workbook.getActiveWorksheet();
+    // Create custom from range A:A on selectedSheet
+    conditionalFormatting = selectedSheet.getRange("A:A").addConditionalFormat(ExcelScript.ConditionalFormatType.custom);
+    conditionalFormatting.getCustom().getRule().setFormula("=COUNTIF('baseline-tasks'!$A$1:$A$250,A1)=0");
+    conditionalFormatting.getCustom().getFormat().getFill().setColor("#ffe699");
+    conditionalFormatting.setStopIfTrue(false);
+    conditionalFormatting.setPriority(0);
+  // Set height of row(s) at all cells on selectedSheet to 15
+  selectedSheet.getRange().getFormat().setRowHeight(15);
+}
+```
+
 
