@@ -13,4 +13,74 @@ _Tasks_:
 3.  Acquire artifacts from "target" system (system we are investigating)
 4.  Parse artifacts
 5.  Perform differential analysis to identity "unusual/anomalous" activity
+----------------
+**Select Artifacts**:
 
+Based on recent analysis of the top several malware families and common behaviors and indicators, we'll acquire the following Windows artifacts:
+1.  Disk: Master File Table (MFT)
+2.  Network Connections: Netstat, DNS Cache
+3.  Memory/Running Processes: pslist
+4.  Persistence Mechanisms: Services, Scheduled Tasks, Startup Items
+
+NOTE: In the "Acquire Artifacts" section belowe, we'll grab a few other, small/lightweight "may be useful outside of differential analysis" artifacts as well!
+
+-----------------
+
+**Acquire Artifacts**:
+
+We'll use a Velociraptor Offline Collector to acquire artifacts from our baseline system (known-good, representative sample) and our target system (the system we are investigating). 
+
+_Velociraptor Offline Collector Configuration_
+Download and execute current, stable version of Velocraptor: 
+-  Velociraptor (download): https://github.com/Velocidex/velociraptor/releases (tested with 0.7.1)
+-  Velociraptor Documentation: https://docs.velociraptor.app/blog/
+
+>velociraptor-v0.7.1-1-windows-amd64.exe gui
+
+Click on "Server Artifacts" (left-hand flyout menu), "Build Offline Collector" (paper airplane icon), then search and "click to add" artifacts:
+ - Windows.Network.NetstatEnriched
+ - Windows.System.Pslist
+ - Windows.KapeFiles.Targets
+ - Windows.System.TaskScheduler
+ - Windows.System.Services
+ - Windows.System.StartupItems
+ - Windows.System.DNSCache
+
+Configure "Parameters:"
+ - Windows.Network.NetstatEnriched:
+   -  Change ProcessNameRegex to = “.”
+ - Windows.System.Pslist:
+   - accept defaults
+ - Windows.KapeFiles.Targets: selec the following artifacts (NOTE: You can use teh "filter artifact parameter name" search box to search!)
+   - _MFT
+   - Antivirus
+   - EventLogs
+   - PowerShellConsole
+   - PowerShellTranscripts
+ - Windows.System.TaskScheduler:
+   - Check "AlsoUpload"
+ - Windows.System.Services
+   - accept defaults
+ - Windows.System.StartupItems:
+   - accept defaults
+ - Windows.System.DNSCache:
+   - accept defaults
+
+Configure "Collection:" (ZIP or S3 Upload)
+ - Collection Type: **ZIP**
+     - Output Format: CSV and JSON
+     - Pause for Prompt: Check
+     - Filename Format: (I usually clear "Collection" for brevity, you can put in "win-mal-" to identify collection type)
+-  Collection Type: **AWS Bucket** (See "AWS Collection Upload Configuration" NOTES below)
+   -  S3 Bucket: your-triage-upload-bucket-name (no "/")
+   -  Credentials Key: copy/paste your AWS IAM Access Key here (remove any trailing space!)
+   -  Credentials Secret: copy/paste your AWS IAM Secret Key here (remove any trailing space!)
+   -  Region: us-east-1 (edit according to your desired region)
+   -  File Name Prefix: your-case-specific-folder-name/ (include trailing "/")
+   -  Output Format: CSV and JSON
+   -  Pause for Prompt: Check
+-  Launch/Download Collector:
+   -  Click "Server.Utils.CreateCollector, Uploaded Files," then click "Collector_velociraptor-vn.n.n-windows-amd64.exe"
+   -  If you receive browser warnings, "keep" and download
+   -  Rename collector descriptively, eg "win-mal-no-upload-collector-win-x64.exe"
+  **NOTE:** I have created and shared a collector in this repo, with the above configuration, suitable for your use/testing!
