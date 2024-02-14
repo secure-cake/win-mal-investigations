@@ -1,8 +1,8 @@
 ﻿#change four variables below for casename, target hostname, triage dir and output dir
 $casename = 'wmi-case'
-$target_hostname = 'RTW-Win11'
-$triage_data_directory = "c:\cases\$casename\wmi_data"
-$output_destination_directory = "c:\cases\$casename\output"
+$target_hostname = 'target'
+$triage_data_directory = "d:\cases\$casename\wmi_data"
+$output_destination_directory = "d:\cases\$casename\output"
 
 (get-childitem -Directory $triage_data_directory).name | ForEach-Object {
 #Copies triage-collection "results" to kape_output directory for review
