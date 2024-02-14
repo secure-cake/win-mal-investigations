@@ -210,5 +210,8 @@ function main(workbook: ExcelScript.Workbook) {
   selectedSheet.getRange().getFormat().setRowHeight(15);
 }
 ```
+Now you can select a "target" worksheet, eg "target-netstat," click "run" to execute the "netstat-diff" code, and all items that are UNIQUE to the "target-netstat" NAME will be highlighted "yellow" for your review!
+
+Repeat this for each worksheet: select the "target" worksheet, then click the associated "worksheet-diff" automation function. 
 
 
