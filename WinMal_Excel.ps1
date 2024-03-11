@@ -11,6 +11,7 @@ Copy-Item $triage_data_directory\$_\results\*StartupItems.csv  $output_destinati
 Copy-Item $triage_data_directory\$_\results\*pslist.csv  $output_destination_directory\$target_hostname'-pslist.csv'
 Copy-Item $triage_data_directory\$_\results\*Services.csv  $output_destination_directory\$target_hostname'-services.csv'
 Copy-Item $triage_data_directory\$_\results\*Scheduler*.csv  $output_destination_directory\$target_hostname'-tasks.csv'
+Copy-Item $triage_data_directory\$_\results\*DNSCache.csv  $output_destination_directory\$target_hostname'-dns.csv'
 }
 #if prompted to save in Excel, click "don't save"
 (get-childitem -Directory $triage_data_directory).name | ForEach-Object {
