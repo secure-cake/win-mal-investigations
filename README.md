@@ -96,22 +96,22 @@ NOTE: Ideally, the "baseline" collection can and should be run proactively, befo
 
 Although we gathered some artifacts that generally require parsing for review/analysis (MFT, EVTX), the "Win Mal Investigation" primary artifacts don't require parsing, though some formatting is helpful. We'll use Excel to combine our "target" and "baseline" endpoint output into a single Excel workbook, to format our data, and to perform "differential" analysis via Contional Formatting, "highlighting" artifact entries that exist on our "target" but NOT on our "baseline" endpoint.
 
-We will need to stage our data and make sure the script matches our folder naming and hierarchy. In general, I follow the following directory structure:
-- Separate Data Volume: eg "D:\" (separeate from the OS Volume)
-- Cases Folder on Data Volume: eg "D:\cases"
-- Named Case Folder under Cases: eg "D:\cases\winmal-case"
-- Triage Data Folder under Case Folder: eg "D:\cases\winmal-case\winmal_data"
-- Output directory for parsed/formatted Case Data: eg "D:\cases\winmal-case\winmal_data\output"
+We will need to stage our data and make sure the script matches our folder naming and hierarchy. The script (WinMal_Target_Baseline_Excel.ps1) expects the following (edit/adjust as you see fit!):
+- Cases Folder on Data Volume: eg "c:\cases" (on production systems, I use a separate data volume, eg. "D:\")
+- Named Case Folder under Cases: eg "c:\cases\demo"
+- A "baseline" folder (copy your baseline ZIP file here): "c:\cases\demo\baseline"
+- A "target" folder (copy your target ZIP file here): "c:\cases\demo\target"
+- Output directory for combined output and the Excel Workbook: "c:\cases\demo\output" (this is AUTO-CREATED by the script)
 
-Obviously do what makes sense to you, but make sure the folders/paths are set correctly in the script variables (see "WinMal_Excel.ps1" script in this repo).
+Obviously do what makes sense to you, but make sure the folders/paths are set correctly in the script variables (WinMal_Target_Baseline_Excel.ps1 in this repo).
 
-Assuming you are following the aforementioned directory structure, unzip your "baseline" system collection to "D:\cases\baseline\winmal_data," then run the "WinMal_Baseline.ps1" script, which will rename and stage artifact CSV files to the "output" directory. We'll copy/paste the "output" directory into the "winmal-case" directory shortly. 
+Assuming you are following the aforementioned directory structure, copy your "baseline" system collection (ZIP) to "c:\cases\demo\baseline" and your "target" system collection (ZIP) to "c:\cases\demo\target," then run the "WinMal_Target_Baseline_Excel.ps1" script, which will unzip your collection data, then gather and combine the netstat, dns, pslist, startup, services, and tasks to a single Excel Workbook. 
+
 NOTE: _you don't need to create a new baseline every time you perform analysis, only if and when things change and you need to update!_
 
-Next, unzip the "target" system collection to "D:\cases\winmal-case\winmal_data," COPY the "output" directory (not just the contents, but the entire directory) into "D:\cases\winmal-case\winmal_data\," then run the "WinMal_Excel.ps1" script 
-NOTE: _you must have Excel installed on your Analysis Workstation for this to work!_
+IMPORTANT: _you must have Excel installed on your Analysis Workstation for this to work!_
 
-You should now have a "target-with-baseline-output.xlsx" workbook in the "output" folder!
+You should now have a "target-with-baseline-output.xlsx" workbook in the "output" folder! You are ready proceed with differential analysis, as below!
 
 ----------------------------
 **Differential Analysis**:
