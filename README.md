@@ -43,7 +43,7 @@ Click on "Server Artifacts" (left-hand flyout menu), "Build Offline Collector" (
  - Windows.KapeFiles.Targets
  - Windows.System.TaskScheduler
  - Windows.System.Services
- - Windows.System.StartupItems
+ - Windows.Sys.StartupItems
  - Windows.System.DNSCache
 
 Configure "Parameters:"
